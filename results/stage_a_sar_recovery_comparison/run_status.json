@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "stage": "A",
+  "seconds": 9.208190199991805,
+  "scope": "training-only local mechanics; no ImageNet effect or generalization claim",
+  "pairs": 6,
+  "ordinary_controls_passed": 78,
+  "valid_paired_batches": 216
+}

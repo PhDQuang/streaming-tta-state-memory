@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "tests": 127,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "test_seconds": 36.227,
+  "junit": "results/verification/pytest.xml",
+  "scope": "Core full suite; generated manuscript has separate source/hash verification, no TeX compilation"
+}

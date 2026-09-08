@@ -1,0 +1,37 @@
+{
+  "method": "tent",
+  "implementation": "tent",
+  "adapted_parameters": [
+    "features.1.weight",
+    "features.1.bias",
+    "features.4.weight",
+    "features.4.bias"
+  ],
+  "parameter_count": 38378,
+  "adapted_parameter_count": 96,
+  "buffers": {
+    "features.1.running_mean": null,
+    "features.1.running_var": null,
+    "features.1.num_batches_tracked": {
+      "shape": [],
+      "dtype": "torch.int64"
+    },
+    "features.4.running_mean": null,
+    "features.4.running_var": null,
+    "features.4.num_batches_tracked": {
+      "shape": [],
+      "dtype": "torch.int64"
+    }
+  },
+  "optimizer": "SGD",
+  "nested_optimizer": null,
+  "aux": {
+    "ema": null,
+    "updates": 0,
+    "skipped": 0,
+    "recoveries": 0,
+    "last_skip_reason": null
+  },
+  "source_state": "initial post-configuration model/optimizer/buffers/aux",
+  "rng_owner": "runner"
+}

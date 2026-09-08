@@ -1,0 +1,38 @@
+[
+  {
+    "direction": "ab",
+    "phase": "history",
+    "seconds": 0.026214299999992363,
+    "images": 512
+  },
+  {
+    "direction": "ab",
+    "phase": "washout_0",
+    "seconds": 1.8999999156221747e-06,
+    "images": 0
+  },
+  {
+    "direction": "ab",
+    "phase": "washout_4",
+    "seconds": 0.005964500000118278,
+    "images": 128
+  },
+  {
+    "direction": "ba",
+    "phase": "history",
+    "seconds": 0.026226499991025776,
+    "images": 512
+  },
+  {
+    "direction": "ba",
+    "phase": "washout_0",
+    "seconds": 2.0000006770715117e-06,
+    "images": 0
+  },
+  {
+    "direction": "ba",
+    "phase": "washout_4",
+    "seconds": 0.008984500003862195,
+    "images": 128
+  }
+]

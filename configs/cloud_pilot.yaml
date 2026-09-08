@@ -1,0 +1,33 @@
+experiment_id: stage_b_imagenetc_pilot_v1
+stage: B
+output: results/stage_b_imagenetc_pilot_v1
+manifest_index: datasets/processed/imagenet-c-pilot/index.json
+backbone: resnet50
+weights: IMAGENET1K_V1
+device: cuda
+threads: 6
+methods: [source, norm, tent, sar_complete]
+washout_batches: [0, 4, 16]
+interventions: [none, parameters, optimizer, parameters_optimizer, aux, parameters_aux, optimizer_aux, parameters_optimizer_aux, all]
+adaptation:
+  batch_size: 32
+  lr: 0.00025
+  momentum: 0.9
+  reset_threshold: 0.2
+  sar_margin: 2.763102111592855
+save_junctions: true
+planning:
+  independent_panels: 3
+  scenarios_per_panel: 3
+  prefix_images: 1024
+  washout_images_max: 512
+  suffix_images: 1024
+  gpu_hours_low: 8
+  gpu_hours_high: 16
+  disk_gb: 120
+  observed_gpu_usd_per_hour: 0.74
+  requested_total_budget_usd: 20
+  provider_rate_url: https://www.runpod.io/pricing
+  rate_observed_date: '2026-09-08'
+  paid_approval_status: pending
+

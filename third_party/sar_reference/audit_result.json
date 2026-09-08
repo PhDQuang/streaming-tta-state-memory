@@ -1,0 +1,72 @@
+{
+  "experiment_id": "UPSTREAM_SAM_STATE_CPU_001",
+  "date": "2026-09-08",
+  "repository": "https://github.com/mr-eggplant/SAR",
+  "commit": "20f6e24b17525f34503510afccedc0629b67b7c4",
+  "purpose": "Audit optimizer snapshot completeness on a two-parameter quadratic objective",
+  "dataset": "none; deterministic synthetic quadratic targets",
+  "seed": null,
+  "hardware": {
+    "device": "cpu",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.9.1+cpu"
+  },
+  "config": {
+    "dtype": "float64",
+    "initial_parameter": [
+      1.0,
+      -2.0
+    ],
+    "lr": 0.1,
+    "momentum": 0.9,
+    "rho": 0.05,
+    "checkpoint_targets": [
+      0.0,
+      0.3,
+      -0.2
+    ],
+    "intervening_targets": [
+      2.0,
+      -1.0
+    ],
+    "next_target": 0.5
+  },
+  "wrapper_state_fields": [
+    "old_p"
+  ],
+  "base_state_fields": [
+    "momentum_buffer"
+  ],
+  "checkpoint_parameter": [
+    0.5092015761453077,
+    -0.9149552169376574
+  ],
+  "checkpoint_momentum": [
+    2.3540192888557003,
+    -4.821867382043651
+  ],
+  "future_momentum": [
+    2.0368211505348315,
+    -5.729762053535087
+  ],
+  "momentum_after_wrapper_restore": [
+    2.0368211505348315,
+    -5.729762053535087
+  ],
+  "wrapper_restore_keeps_future_momentum": true,
+  "wrapper_restore_recovers_checkpoint_momentum": false,
+  "wrapper_only_next_parameter": [
+    0.32493500023774635,
+    -0.25278121614771853
+  ],
+  "complete_restore_next_parameter": [
+    0.2963871677888681,
+    -0.33449173658194775
+  ],
+  "next_parameter_max_abs_difference": 0.08171052043422922,
+  "cold_wrapper_load_leaves_base_state": true,
+  "duration_seconds": 1.819854800007306,
+  "training_duration_seconds": 0.0,
+  "interpretation": "Pinned wrapper state omits SGD momentum; loading wrapper state alone does not restore complete optimizer dynamics.",
+  "limits": "No image data, labels, benchmark accuracy, or evidence about the magnitude of any CV performance effect."
+}

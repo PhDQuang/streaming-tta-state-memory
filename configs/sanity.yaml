@@ -1,0 +1,33 @@
+experiment_id: stage_a_uci_v1
+stage: A
+data: datasets/raw/uci/optdigits.tra
+output: results/stage_a_uci_v1
+device: cpu
+threads: 2
+source_seeds: [17, 29, 43]
+split_seed: 20260908
+counts:
+  source_train: 2048
+  source_dev: 384
+  prefix: 512
+  washout: 128
+  suffix: 512
+training:
+  epochs: 12
+  batch_size: 64
+  lr: 0.003
+adaptation:
+  batch_size: 32
+  lr: 0.001
+  momentum: 0.9
+  reset_threshold: 0.2
+methods: [source, norm, tent, sar_complete]
+washout_batches: [0, 4]
+interventions: [none, parameters, optimizer, parameters_optimizer, aux, parameters_aux, optimizer_aux, parameters_optimizer_aux, all]
+scenarios:
+  - name: noise_brightness_to_blur
+    domains: [noise, brightness]
+    suffix_domain: blur
+  - name: blur_noise_to_clean
+    domains: [blur, noise]
+    suffix_domain: clean

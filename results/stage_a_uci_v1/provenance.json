@@ -1,0 +1,102 @@
+{
+  "utc": "2026-09-08T15:26:42.995450+00:00",
+  "config": {
+    "experiment_id": "stage_a_uci_v1",
+    "stage": "A",
+    "data": "datasets/raw/uci/optdigits.tra",
+    "output": "results/stage_a_uci_v1",
+    "device": "cpu",
+    "threads": 2,
+    "source_seeds": [
+      17,
+      29,
+      43
+    ],
+    "split_seed": 20260908,
+    "counts": {
+      "source_train": 2048,
+      "source_dev": 384,
+      "prefix": 512,
+      "washout": 128,
+      "suffix": 512
+    },
+    "training": {
+      "epochs": 12,
+      "batch_size": 64,
+      "lr": 0.003
+    },
+    "adaptation": {
+      "batch_size": 32,
+      "lr": 0.001,
+      "momentum": 0.9,
+      "reset_threshold": 0.2
+    },
+    "methods": [
+      "source",
+      "norm",
+      "tent",
+      "sar_complete"
+    ],
+    "washout_batches": [
+      0,
+      4
+    ],
+    "interventions": [
+      "none",
+      "parameters",
+      "optimizer",
+      "parameters_optimizer",
+      "aux",
+      "parameters_aux",
+      "optimizer_aux",
+      "parameters_optimizer_aux",
+      "all"
+    ],
+    "scenarios": [
+      {
+        "name": "noise_brightness_to_blur",
+        "domains": [
+          "noise",
+          "brightness"
+        ],
+        "suffix_domain": "blur"
+      },
+      {
+        "name": "blur_noise_to_clean",
+        "domains": [
+          "blur",
+          "noise"
+        ],
+        "suffix_domain": "clean"
+      }
+    ]
+  },
+  "config_sha256": "33ec43fbb5b20a88ee6b2741c84c40fbfae50f4a49da8d2c9d8569ba2e67d99e",
+  "git_commit": null,
+  "git_dirty": true,
+  "source_hashes": {
+    "src/historytta/__init__.py": "f6505083615c9944b3827fb7594666c6a1c9422e1c0e4cc9bc320964fcf36686",
+    "src/historytta/adapters.py": "549ee7d292b20434401072a67e1b56a99b4c55fd8869e9e7ff467c05a763192a",
+    "src/historytta/data.py": "1860e7dfda9cdb5e9a2a417c191dcfbf1e6d1df6964bf5eb9c61c4e29f8c06c3",
+    "src/historytta/metrics.py": "29cea8ee3a14707e75e21d0f4ac3d67a8a15ef9b1dd9e7ba57d1168add30275a",
+    "src/historytta/models.py": "971f594788021ab00aa903dcc920eae875ea7bde4b85505618bbdecb108da7e1",
+    "src/historytta/runner.py": "16b16ae1fa8b01fbdf9d6833ba84f018dac804a9bef38d773ee7c904e7d5e58d",
+    "src/historytta/streams.py": "4fc1115198ad435cb971e0c7361c82bf23d4abd8ebf0fa9e9ddb73e9fd007d48",
+    "src/historytta/utils.py": "c505ddcd768183ce302d92b677c5f6a410bed39b09b5862be7e3032305189c66",
+    "scripts/_bootstrap.py": "96e88553f6892171d2c1f700121ec2bc0e0691c32196fb03b3b2ddfb0cd9542b",
+    "scripts/audit_upstream_sar.py": "e0f2bef2092086153e160b04522ca14377a48c268a0848947b8a9b0e8e867956",
+    "scripts/build_research_index.py": "fb81a51bb81435e35523818e166708514bae088c53cb4bba06b921ee604b25d5",
+    "scripts/download_data.py": "47876d315110ebf4429b6b5a5db4e478781c9843e31dba0b111516b5dbd6b72c",
+    "scripts/generate_figures.py": "d4596f58ce3bca4935809aac0897d0b9cf1a6a46b7f8cb7f4e8467fd3ebbd3b5",
+    "scripts/generate_tables.py": "bf063e0f79cbc89fc85fa5cd7797a95be53878cee4f5077018ba4fa16237c5e4",
+    "scripts/prepare_data.py": "b715961443a63d1da5813e69f689fc6fa89e6937f859942c6440ba51ba2b95d3",
+    "scripts/run_sanity.py": "1d6dda3b92ba0279c1348da43c0cd02af2683c6f17e7ea0342cff08e4d9bca34",
+    "configs/sanity.yaml": "7e6fb0e9c464b7c8573901e987e38fdc7441440e0de033e4ad0e4d236f8702fd"
+  },
+  "python": "3.10.0",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.9.1+cpu",
+  "numpy": "2.2.6",
+  "cuda_available": false,
+  "device": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel"
+}

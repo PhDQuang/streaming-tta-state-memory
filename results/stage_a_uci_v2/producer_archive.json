@@ -1,0 +1,30 @@
+{
+  "archive": "producer_source.zip",
+  "sha256": "5f278cd1349c2e285902a03e10ff62adc2510e183e941596546c3b44d4c8e576",
+  "exact_recorded_sources_archived": [
+    "configs/cloud_pilot.yaml",
+    "configs/sanity.yaml",
+    "configs/sanity_v2.yaml",
+    "scripts/_bootstrap.py",
+    "scripts/audit_upstream_sar.py",
+    "scripts/build_research_index.py",
+    "scripts/download_data.py",
+    "scripts/prepare_data.py",
+    "scripts/run_sanity.py",
+    "src/historytta/__init__.py",
+    "src/historytta/adapters.py",
+    "src/historytta/data.py",
+    "src/historytta/metrics.py",
+    "src/historytta/models.py",
+    "src/historytta/runner.py",
+    "src/historytta/streams.py",
+    "src/historytta/utils.py"
+  ],
+  "changed_or_unavailable_nonproducer_sources": [
+    "scripts/generate_figures.py",
+    "scripts/generate_tables.py",
+    "scripts/run_cloud_pilot.py"
+  ],
+  "all_required_runtime_sources_archived": true,
+  "note": "Historical git_commit remains null. This archive preserves matching producer bytes; later analysis has separate provenance. Config object is embedded in run_provenance.json."
+}

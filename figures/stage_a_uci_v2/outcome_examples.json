@@ -1,0 +1,71 @@
+{
+  "comparison_a": "Source",
+  "comparison_b": "SAR (complete-state implementation) / no reset",
+  "prediction_file_a": "predictions/17_uci_internal_fixed_blur_noise_to_clean_source_w0_none_ab.npz",
+  "prediction_file_b": "predictions/17_uci_internal_fixed_blur_noise_to_clean_sar_complete_w0_none_ab.npz",
+  "prediction_sha256_a": "d8e4d5e7c519c7bcf8adc7b8f2a16a0e03dc42eee62c28634320872e89d13f6f",
+  "prediction_sha256_b": "a3d18f02f7bf0b67d2764aa0c583742ee094c8e9508a70b32766f1c81c1b5f18",
+  "selection": "First eligible recorded run pair in sorted identifiers; first lexicographic image IDs in each outcome group",
+  "counts": {
+    "Both correct": 503,
+    "A correct, B wrong": 0,
+    "A wrong, B correct": 0,
+    "Both wrong": 9
+  },
+  "examples": {
+    "Both correct": [
+      {
+        "id": "1004",
+        "label": 2,
+        "prediction_a": 2,
+        "prediction_b": 2,
+        "image_index_a": 165,
+        "image_index_b": 165
+      },
+      {
+        "id": "1015",
+        "label": 1,
+        "prediction_a": 1,
+        "prediction_b": 1,
+        "image_index_a": 122,
+        "image_index_b": 122
+      },
+      {
+        "id": "1017",
+        "label": 9,
+        "prediction_a": 9,
+        "prediction_b": 9,
+        "image_index_a": 198,
+        "image_index_b": 198
+      }
+    ],
+    "A correct, B wrong": [],
+    "A wrong, B correct": [],
+    "Both wrong": [
+      {
+        "id": "1703",
+        "label": 8,
+        "prediction_a": 5,
+        "prediction_b": 5,
+        "image_index_a": 450,
+        "image_index_b": 450
+      },
+      {
+        "id": "1810",
+        "label": 8,
+        "prediction_a": 1,
+        "prediction_b": 1,
+        "image_index_a": 223,
+        "image_index_b": 223
+      },
+      {
+        "id": "185",
+        "label": 0,
+        "prediction_a": 6,
+        "prediction_b": 6,
+        "image_index_a": 474,
+        "image_index_b": 474
+      }
+    ]
+  }
+}

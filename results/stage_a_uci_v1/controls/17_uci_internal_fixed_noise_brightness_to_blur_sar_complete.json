@@ -1,0 +1,102 @@
+[
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_none_ab_snapshot_replay",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_none_ab_full_replay",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_none_ba_snapshot_replay",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_none_ba_full_replay",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_parameters_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_parameters_optimizer_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_parameters_aux_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_parameters_optimizer_aux_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_all_ab_cold_reset",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_all_ba_cold_reset",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_all_history_invariance",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w0_all_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_parameters_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_parameters_optimizer_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_parameters_aux_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_parameters_optimizer_aux_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_all_ab_cold_reset",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_all_ba_cold_reset",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_all_history_invariance",
+    "passed": true,
+    "max_logit_diff": 0.0
+  },
+  {
+    "id": "17_uci_internal_fixed_noise_brightness_to_blur_sar_complete_w4_all_first_batch",
+    "passed": true,
+    "max_logit_diff": 0.0
+  }
+]

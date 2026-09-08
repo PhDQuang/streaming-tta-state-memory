@@ -1,0 +1,8 @@
+{
+  "status": "complete",
+  "stage": "A",
+  "seconds": 144.67261869998765,
+  "controls_passed": 408,
+  "controls_total": 408,
+  "scientific_claims": "training-only local correctness; no ImageNet generalization evidence"
+}

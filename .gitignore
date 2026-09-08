@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+datasets/raw/
+datasets/processed/
+checkpoints/*.pt
+checkpoints/*.pth
+results/**/checkpoints/
+results/**/junctions/
+results/**/source_anchor.pt
+*.egg-info/
+.env
+secrets/
+wandb/
+research/evidence/*.pdf

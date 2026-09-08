@@ -1,0 +1,20 @@
+[
+  {
+    "seed": 17,
+    "path": "checkpoints/stage_a_uci_v1_source_17.pt",
+    "sha256": "72b0d7194c46341e9c25b27fd37c580bc7736df9bdea2a4259da5ed33ca6be52",
+    "dev_accuracy": 0.9817708134651184
+  },
+  {
+    "seed": 29,
+    "path": "checkpoints/stage_a_uci_v1_source_29.pt",
+    "sha256": "72e87ee75027b756f3652e763a9495fb8b2dfa51966a4a8f771fc1401bdc78ea",
+    "dev_accuracy": 0.9765625
+  },
+  {
+    "seed": 43,
+    "path": "checkpoints/stage_a_uci_v1_source_43.pt",
+    "sha256": "5a1c6afd31e65dff2f8c4b243d88aad4fe3922b10442f06507dc83e21861131d",
+    "dev_accuracy": 0.9817708134651184
+  }
+]

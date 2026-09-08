@@ -1,0 +1,130 @@
+[
+  {
+    "batch": 0,
+    "ema": 0.22047855658366003,
+    "updates": 17,
+    "skipped": 0,
+    "recoveries": 0,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 1,
+    "ema": 0.19910899442538962,
+    "updates": 18,
+    "skipped": 0,
+    "recoveries": 1,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 2,
+    "ema": 0.18433248676751862,
+    "updates": 19,
+    "skipped": 0,
+    "recoveries": 2,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 3,
+    "ema": 0.1689011675378216,
+    "updates": 20,
+    "skipped": 0,
+    "recoveries": 3,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 4,
+    "ema": 0.15441618928407427,
+    "updates": 21,
+    "skipped": 0,
+    "recoveries": 4,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 5,
+    "ema": 0.14401725964928982,
+    "updates": 22,
+    "skipped": 0,
+    "recoveries": 5,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 6,
+    "ema": 0.13316623191999183,
+    "updates": 23,
+    "skipped": 0,
+    "recoveries": 6,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 7,
+    "ema": 0.12199309196442472,
+    "updates": 24,
+    "skipped": 0,
+    "recoveries": 7,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 8,
+    "ema": 0.11712567263576484,
+    "updates": 25,
+    "skipped": 0,
+    "recoveries": 8,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 9,
+    "ema": 0.10900597426652696,
+    "updates": 26,
+    "skipped": 0,
+    "recoveries": 9,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 10,
+    "ema": 0.09846862924495148,
+    "updates": 27,
+    "skipped": 0,
+    "recoveries": 10,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 11,
+    "ema": 0.09020957910924084,
+    "updates": 28,
+    "skipped": 0,
+    "recoveries": 11,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 12,
+    "ema": 0.08276115377761954,
+    "updates": 29,
+    "skipped": 0,
+    "recoveries": 12,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 13,
+    "ema": 0.07854500840620429,
+    "updates": 30,
+    "skipped": 0,
+    "recoveries": 13,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 14,
+    "ema": 0.07645913598402945,
+    "updates": 31,
+    "skipped": 0,
+    "recoveries": 14,
+    "last_skip_reason": null
+  },
+  {
+    "batch": 15,
+    "ema": 0.07248699527202196,
+    "updates": 32,
+    "skipped": 0,
+    "recoveries": 15,
+    "last_skip_reason": null
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "method": "source",
+  "implementation": "source",
+  "adapted_parameters": [],
+  "parameter_count": 38378,
+  "adapted_parameter_count": 0,
+  "buffers": {
+    "features.1.running_mean": {
+      "shape": [
+        16
+      ],
+      "dtype": "torch.float32"
+    },
+    "features.1.running_var": {
+      "shape": [
+        16
+      ],
+      "dtype": "torch.float32"
+    },
+    "features.1.num_batches_tracked": {
+      "shape": [],
+      "dtype": "torch.int64"
+    },
+    "features.4.running_mean": {
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32"
+    },
+    "features.4.running_var": {
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32"
+    },
+    "features.4.num_batches_tracked": {
+      "shape": [],
+      "dtype": "torch.int64"
+    }
+  },
+  "optimizer": null,
+  "nested_optimizer": null,
+  "aux": {
+    "ema": null,
+    "updates": 0,
+    "skipped": 0,
+    "recoveries": 0,
+    "last_skip_reason": null
+  },
+  "source_state": "initial post-configuration model/optimizer/buffers/aux",
+  "rng_owner": "runner"
+}

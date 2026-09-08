@@ -1,0 +1,89 @@
+batch=0 phase=history_ab
+
+batch=1 phase=history_ab
+
+batch=2 phase=history_ab
+
+batch=3 phase=history_ab
+
+batch=4 phase=history_ab
+
+batch=5 phase=history_ab
+
+batch=6 phase=history_ab
+
+batch=7 phase=history_ab
+
+batch=8 phase=history_ab
+
+batch=9 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=10 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=11 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=12 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=13 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=14 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=15 phase=history_ab
+ema < 0.2, now reset the model
+
+batch=16 phase=washout4
+ema < 0.2, now reset the model
+
+batch=17 phase=washout4
+ema < 0.2, now reset the model
+
+batch=18 phase=washout4
+ema < 0.2, now reset the model
+
+batch=19 phase=washout4
+ema < 0.2, now reset the model
+
+batch=20 phase=suffix
+ema < 0.2, now reset the model
+
+batch=21 phase=suffix
+ema < 0.2, now reset the model
+
+batch=22 phase=suffix
+ema < 0.2, now reset the model
+
+batch=23 phase=suffix
+ema < 0.2, now reset the model
+
+batch=24 phase=suffix
+ema < 0.2, now reset the model
+
+batch=25 phase=suffix
+
+batch=26 phase=suffix
+ema < 0.2, now reset the model
+
+batch=27 phase=suffix
+ema < 0.2, now reset the model
+
+batch=28 phase=suffix
+
+batch=29 phase=suffix
+
+batch=30 phase=suffix
+
+batch=31 phase=suffix
+
+batch=32 phase=suffix
+
+batch=33 phase=suffix
+
+batch=34 phase=suffix
+
+batch=35 phase=suffix

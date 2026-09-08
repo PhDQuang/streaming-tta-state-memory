@@ -1,0 +1,29 @@
+{
+  "status": "Stage A draft; full empirical study incomplete",
+  "generated_values": {
+    "N_RUNS": 528,
+    "N_PAIRS": 264,
+    "N_CONTROLS": 408,
+    "SECONDS": "144.67",
+    "MAX_D": "0.1953125",
+    "SAR_RECOVERIES": 2108,
+    "SAR_SKIPS": 0,
+    "TRAINING_TABLE": "| Seed | Final-epoch training loss | Internal development accuracy (%) |\n| --- | --- | --- |\n| 17 | 0.001624 | 98.1771 |\n| 29 | 0.001138 | 97.6562 |\n| 43 | 0.001033 | 98.1771 |",
+    "DISAGREEMENT_TABLE": "| Method | W | Seed17 D (pp) | Seed29 D (pp) | Seed43 D (pp) | Mean (pp) | Seed SD (pp) |\n| --- | --- | --- | --- | --- | --- | --- |\n| Source | 0 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| Source | 4 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| Normalization only | 0 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| Normalization only | 4 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| Tent | 0 | 0.097656 | 0.000000 | 0.000000 | 0.032552 | 0.056382 |\n| Tent | 4 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| SAR complete | 0 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 |\n| SAR complete | 4 | 0.097656 | 0.000000 | 0.000000 | 0.032552 | 0.056382 |",
+    "PERFORMANCE_TABLE": "| Method | Seed17 accuracy (%) | Seed29 accuracy (%) | Seed43 accuracy (%) | Mean \u00b1 seed SD (%) | Mean NLL |\n| --- | --- | --- | --- | --- | --- |\n| Source | 86.8164 | 84.3750 | 73.0469 | 81.4128 \u00b1 7.3472 | 0.551879 |\n| Normalization only | 85.8398 | 84.4727 | 88.0859 | 86.1328 \u00b1 1.8244 | 0.513794 |\n| Tent | 86.1328 | 84.4727 | 88.0859 | 86.2305 \u00b1 1.8086 | 0.514407 |\n| SAR complete | 85.8887 | 84.4727 | 88.0859 | 86.1491 \u00b1 1.8207 | 0.514120 |",
+    "EXPERIMENT": "stage_a_uci_v2",
+    "RESULTS": "results/stage_a_uci_v2"
+  },
+  "input_sha256": {
+    "results\\stage_a_uci_v2\\runs.csv": "b82fe0b8f009771a38ff52c04a838d84639d1532f98d7e1c51544881109bccc9",
+    "results\\stage_a_uci_v2\\paired.csv": "e8dc660521e858f4e9d75f335cc809d11cd011ffd27c1be4b50fff4439771fc2",
+    "results\\stage_a_uci_v2\\training.csv": "17d1a2e78b8ea09c4a9348d375855a2dfd4a710a62b8142279b2339e34443705",
+    "results\\stage_a_uci_v2\\run_status.json": "a32116ead59da6440c46bbcfbc99b96855815bdfd0815b1f22696c70c66f637f",
+    "results\\stage_a_uci_v2\\provenance.json": "0943c9c46c6aedb9629ba3da7db5f89d2be3db42631434674b701f6acc121a05",
+    "paper\\manuscript_template.md": "f67bde1981dd1a61f216795b83d12ed14f04a489e522a6e180ca338d440774fe",
+    "C:\\Study\\Project\\New folder\\scripts\\build_paper.py": "d2c506715b9951e8144f4b6424fab900b869e2f3bd8a454fdcb27421adf50631",
+    "results\\stage_a_sar_recovery_comparison\\summary.json": "05d3a010687dd0bd5eb1f898789b11e63c2ce71a6d6088485392f3a63bc096e3"
+  },
+  "paper_sha256": "7896dd5a4a8ae3fbfcbb770d0050fee38f204d2bb53974585069eae9e1ce238e",
+  "static_context": "Protocol and comparison prose are reviewed separately; dynamic Stage A tables derive from CSVs."
+}

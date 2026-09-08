@@ -1,0 +1,29 @@
+{
+  "scope": "Deterministic scientific-result parity; timing and experiment IDs intentionally excluded",
+  "files": {
+    "runs.csv": {
+      "rows_v1": 528,
+      "rows_v2": 528,
+      "exact_values_equal": true,
+      "max_numeric_difference": 0.0
+    },
+    "paired.csv": {
+      "rows_v1": 264,
+      "rows_v2": 264,
+      "exact_values_equal": true,
+      "max_numeric_difference": 0.0
+    },
+    "training.csv": {
+      "rows_v1": 36,
+      "rows_v2": 36,
+      "exact_values_equal": true,
+      "max_numeric_difference": 0.0
+    }
+  },
+  "predictions": {
+    "files_compared": 528,
+    "v2_file_count": 528,
+    "different_prediction_arrays": []
+  },
+  "passed": true
+}
