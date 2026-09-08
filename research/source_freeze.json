@@ -1,0 +1,24 @@
+{
+  "utc": "2026-09-08T16:01:48.333549+00:00",
+  "source_and_artifact_commit": "c4cc3d0baf456f934eb9d7003124f688b4f8e62c",
+  "scope": "Free research preparation, Stage A and cloud pilot plan; full empirical objective incomplete",
+  "paid_approval": "pending",
+  "paid_actions_taken": false,
+  "verification": {
+    "passed": 126,
+    "skipped": 1,
+    "failed": 0,
+    "junit_sha256": "517b64a925ecdf317b8c901f956ba19f9d5017fce84fae2f1556add51c21b014"
+  },
+  "stage_a_v2": {
+    "historical_git_commit": null,
+    "producer_archive_sha256": "5f278cd1349c2e285902a03e10ff62adc2510e183e941596546c3b44d4c8e576",
+    "controls_passed": 408,
+    "directional_runs": 528,
+    "paired_runs": 264
+  },
+  "manuscript_sha256": "7896dd5a4a8ae3fbfcbb770d0050fee38f204d2bb53974585069eae9e1ce238e",
+  "latex_sha256": "6b7a1d469819654134be066398e4b10680a4497e8fee6339df5b393bb7d8a6e3",
+  "latex_compiled": false,
+  "note": "This commit was created after the experiments. It does not replace their original null-commit provenance. Exact v2 runtime producer bytes are separately archived."
+}
