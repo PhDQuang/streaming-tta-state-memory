@@ -13,6 +13,10 @@ The central question is whether two permutations of the same historical image ba
 
 ## Environment
 
+For a free exploratory ImageNet-C run on Kaggle, use [the Kaggle notebook](notebooks/kaggle_stage_b_preliminary.ipynb), [preliminary config](configs/kaggle_preliminary.yaml), and [Vietnamese setup guide](research/kaggle_preliminary.md). This separate one-panel experiment keeps W16 and tests none/all resets; it is not the full cloud pilot or a confirmatory study.
+
+For the attached 200-class 64x64 Tiny ImageNet-C mirror, use [the Tiny notebook](notebooks/kaggle_tiny_imagenetc_preliminary.ipynb) and [Tiny setup guide](research/kaggle_tiny_preliminary.md). Its separate experiment projects ImageNet-pretrained ResNet50 to the dataset's 200 synsets; no Tiny-trained source baseline or ImageNet-C Stage B result is claimed.
+
 Recorded local environment: Python 3.10.0, PyTorch 2.9.1+cpu, torchvision 0.24.1+cpu, Windows 11, Intel i5-1145G7, 31.7 GiB RAM, no CUDA GPU. Existing packages were used; no large local dataset was downloaded. See [audit](research/environment.md).
 
 For a fresh CPU environment, create a virtual environment, activate it, and run:

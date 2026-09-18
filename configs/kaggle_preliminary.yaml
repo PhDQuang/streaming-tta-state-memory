@@ -1,0 +1,33 @@
+experiment_id: stage_b_imagenetc_kaggle_preliminary_v1
+stage: B
+output: results/stage_b_imagenetc_kaggle_preliminary_v1
+manifest_index: datasets/processed/imagenet-c-kaggle-preliminary/index.json
+backbone: resnet50
+weights: IMAGENET1K_V1
+device: cuda
+threads: 2
+methods: [source, norm, tent, sar_complete]
+washout_batches: [0, 4, 16]
+interventions: [none, all]
+adaptation:
+  batch_size: 32
+  lr: 0.00025
+  momentum: 0.9
+  reset_threshold: 0.2
+  sar_margin: 2.763102111592855
+save_junctions: false
+interpretation: "Exploratory one-panel Kaggle run; no population inference or full state-component ablation."
+planning:
+  independent_panels: 1
+  scenarios_per_panel: 3
+  prefix_images: 1024
+  washout_images_max: 512
+  suffix_images: 1024
+  # Scheduling allowance only, not a measured runtime prediction.
+  gpu_hours_low: 0
+  gpu_hours_high: 10
+  disk_gb: 10
+  observed_gpu_usd_per_hour: 0
+  requested_total_budget_usd: 0
+  provider: kaggle
+  paid_approval_status: not_applicable_free_quota

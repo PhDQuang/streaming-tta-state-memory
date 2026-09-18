@@ -85,13 +85,16 @@ def experiment_plan(config):
         "disk_gb":p["disk_gb"],"requested_ceiling_usd":p["requested_total_budget_usd"]}}
 
 
-def load_index(path: Path, expected_batch_size: int, expected_planning: dict | None=None):
+def load_index(path: Path, expected_batch_size: int, expected_planning: dict | None=None,
+               *, dataset_profile="imagenet_c"):
     """Validate frozen content, statistical units, labels and all batch stages.
 
     Reused scenarios must retain the same H/W/Q identity pools inside a panel;
     distinct panel IDs must have disjoint original-image identities. Digests are
     checked against actual bytes even when a path was already read elsewhere.
     """
+    if dataset_profile not in {"imagenet_c", "tiny_imagenet_c"}:
+        raise ValueError("Unknown dataset profile")
     if type(expected_batch_size) is not int or expected_batch_size<=0:
         raise ValueError("Expected batch size must be a positive integer")
     path=Path(path)
@@ -118,8 +121,15 @@ def load_index(path: Path, expected_batch_size: int, expected_planning: dict | N
     if "expected_classes" in metadata and metadata["expected_classes"]!=len(mapping):
         raise ValueError("Declared class count differs from the class mapping")
     if expected_planning is not None:
-        if len(mapping)!=1000 or metadata.get("expected_classes")!=1000:
+        tiny = dataset_profile == "tiny_imagenet_c"
+        count = 200 if tiny else 1000
+        if len(mapping)!=count or metadata.get("expected_classes")!=count:
+            if tiny:
+                raise ValueError("Tiny planning requires exactly 200 classes")
             raise ValueError("Production planning requires exactly 1000 ImageNet classes; fixture mappings are loader-only")
+        if tiny and (metadata.get("dataset") != "Tiny ImageNet-C"
+                     or metadata.get("dataset_profile") != dataset_profile):
+            raise ValueError("Tiny planning requires an explicit Tiny dataset identity")
         if metadata.get("class_index_sha256")!=CLASS_INDEX_SHA256:
             raise ValueError("Production class mapping must declare the pinned canonical class-index digest")
     if "source_records_sha256" in metadata and metadata["source_records_sha256"]!=object_sha256(metadata.get("source_records")):
@@ -154,7 +164,8 @@ def load_index(path: Path, expected_batch_size: int, expected_planning: dict | N
         for name in ("panel_id","scenario","seed","severity"):
             if name in panel_metadata and panel_metadata[name]!=record.get(name):
                 raise ValueError(f"Index record and document metadata {name} mismatch")
-        for name in ("path_mode","batch_size","class_to_idx","model_class_names","expected_classes","class_index_sha256","source_records_sha256"):
+        for name in ("path_mode","batch_size","class_to_idx","model_class_names","expected_classes","class_index_sha256","source_records_sha256",
+                     "dataset","dataset_profile","input_image_size","classifier","output_imagenet_indices","classifier_sha256"):
             if name in panel_metadata and panel_metadata[name]!=metadata.get(name):
                 raise ValueError(f"Index and document metadata {name} mismatch")
         if "source_records_sha256" in panel_metadata and panel_metadata["source_records_sha256"]!=object_sha256(panel_metadata.get("source_records")):
@@ -214,23 +225,19 @@ def load_index(path: Path, expected_batch_size: int, expected_planning: dict | N
     return index,records
 
 
-def main():
-    p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--config",type=Path,default=Path("configs/cloud_pilot.yaml"))
-    p.add_argument("--execute",action="store_true")
-    p.add_argument("--max-hours",type=float,default=16.0,help="Experiment-process cap, NOT a provider billing shutdown")
-    args=p.parse_args()
-    cfg=yaml.safe_load(args.config.read_text(encoding="utf-8"))
+def run_experiment(cfg, max_hours, *, index_loader=None, backbone_loader=None):
+    """Shared execution; custom dataset/model loaders must verify their contract."""
     plan=experiment_plan(cfg)
-    if not args.execute:
-        print(json.dumps(plan,indent=2))
-        return
+    stage = cfg["stage"]
     if not torch.cuda.is_available() or cfg["device"]!="cuda":
         raise RuntimeError("Cloud execution requires a CUDA GPU; local CPU is only for sanity checks")
-    if args.max_hours<=0 or args.max_hours>16:
+    if max_hours<=0 or max_hours>16:
         raise ValueError("Pilot process cap must be in (0,16] hours; larger runs need a separately approved plan")
     index_path=Path(cfg["manifest_index"])
-    index,records=load_index(index_path,cfg["adaptation"]["batch_size"],expected_planning=cfg["planning"])
+    if index_loader is None:
+        index,records=load_index(index_path,cfg["adaptation"]["batch_size"],expected_planning=cfg["planning"])
+    else:
+        index,records=index_loader(cfg)
     if len(records)!=cfg["planning"]["independent_panels"]*cfg["planning"]["scenarios_per_panel"]:
         raise ValueError("Unexpected pilot matrix; verify frozen manifest/config")
     output=Path(cfg["output"])
@@ -241,18 +248,20 @@ def main():
     write_json(output/"plan.json",plan)
     write_json(output/"manifest_index.json",index)
     started=time.perf_counter()
-    write_json(output/"run_status.json",{"status":"running","stage":"B"})
+    write_json(output/"run_status.json",{"status":"running","stage":stage})
     controls=[]
     try:
         seed_all(20260908,cfg["threads"])
-        model,transform=load_configured_backbone(cfg)
+        model,transform=load_configured_backbone(cfg) if backbone_loader is None else backbone_loader(cfg,index)
         anchor=output/"source_anchor.pt"
-        torch.save({"model":model.state_dict(),"backbone":cfg["backbone"],"weights":cfg["weights"]},anchor)
+        torch.save({"model":model.state_dict(),"backbone":cfg["backbone"],"weights":cfg["weights"],
+                    "dataset":index["metadata"].get("dataset"),
+                    "output_imagenet_indices":index["metadata"].get("output_imagenet_indices")},anchor)
         source_info={"path":str(anchor.resolve()),"sha256":file_sha256(anchor),"config_sha256":object_sha256(cfg)}
         loader=ImageLoader(transform)
         for record,panel,document in records:
             for method in cfg["methods"]:
-                if (time.perf_counter()-started)/3600>=args.max_hours:
+                if (time.perf_counter()-started)/3600>=max_hours:
                     raise TimeoutError("Process runtime cap reached. Provider must still be stopped separately.")
                 seed_all(record["seed"],cfg["threads"])
                 settings={k:v for k,v in cfg["adaptation"].items() if k!="batch_size"}
@@ -270,13 +279,27 @@ def main():
                 print(f'{record["panel_id"]} {record["scenario"]} {method} completed',flush=True)
                 del adapter
                 torch.cuda.empty_cache()
-        write_json(output/"run_status.json",{"status":"complete","stage":"B","seconds":time.perf_counter()-started,
+        write_json(output/"run_status.json",{"status":"complete","stage":stage,"seconds":time.perf_counter()-started,
             "controls_passed":sum(c["passed"] for c in controls),"controls_total":len(controls),
-            "interpretation":"Underpowered pilot; report findings and variance before any full-stage approval"})
+            "interpretation":cfg.get("interpretation", "Underpowered pilot; report findings and variance before any full-stage approval")})
     except Exception:
-        write_json(output/"run_status.json",{"status":"failed","stage":"B","seconds":time.perf_counter()-started,
+        write_json(output/"run_status.json",{"status":"failed","stage":stage,"seconds":time.perf_counter()-started,
                                            "traceback":traceback.format_exc()})
         raise
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--config",type=Path,default=Path("configs/cloud_pilot.yaml"))
+    p.add_argument("--execute",action="store_true")
+    p.add_argument("--max-hours",type=float,default=16.0,help="Experiment-process cap, NOT a provider billing shutdown")
+    args=p.parse_args()
+    cfg=yaml.safe_load(args.config.read_text(encoding="utf-8"))
+    plan=experiment_plan(cfg)
+    if not args.execute:
+        print(json.dumps(plan,indent=2))
+        return
+    run_experiment(cfg,args.max_hours)
 
 
 if __name__=="__main__":

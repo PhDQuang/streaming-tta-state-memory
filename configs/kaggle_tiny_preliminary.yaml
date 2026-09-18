@@ -1,0 +1,38 @@
+experiment_id: tiny_imagenetc_kaggle_preliminary_v1
+stage: TINY
+dataset: Tiny ImageNet-C
+dataset_profile: tiny_imagenet_c
+output: results/tiny_imagenetc_kaggle_preliminary_v1
+manifest_index: datasets/processed/tiny-imagenet-c-kaggle-preliminary/index.json
+class_index: datasets/metadata/imagenet_class_index.json
+backbone: resnet50
+weights: IMAGENET1K_V1
+classifier: imagenet_200_class_projection
+expected_classes: 200
+device: cuda
+threads: 2
+methods: [source, norm, tent, sar_complete]
+washout_batches: [0, 4, 16]
+interventions: [none, all]
+adaptation:
+  batch_size: 32
+  lr: 0.00025
+  momentum: 0.9
+  reset_threshold: 0.2
+  # 0.4 * log(200), computed for the projected classifier.
+  sar_margin: 2.1193269466192146
+save_junctions: false
+interpretation: "Exploratory Tiny ImageNet-C, one panel; ImageNet-pretrained ResNet50 projected to 200 dataset synsets, input resized to 224. Not a Tiny-trained baseline or Stage B ImageNet-C result."
+planning:
+  independent_panels: 1
+  scenarios_per_panel: 3
+  prefix_images: 512
+  washout_images_max: 512
+  suffix_images: 512
+  gpu_hours_low: 0
+  gpu_hours_high: 10
+  disk_gb: 5
+  observed_gpu_usd_per_hour: 0
+  requested_total_budget_usd: 0
+  provider: kaggle
+  paid_approval_status: not_applicable_free_quota

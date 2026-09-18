@@ -18,6 +18,28 @@ class DigitCNN(nn.Module):
         return self.head(self.features(x))
 
 
+class ProjectedClassifier(nn.Module):
+    """Select fixed source logits before probabilities and adaptation losses.
+
+    This is conditional classification over a declared subset, not a newly
+    trained head or a Tiny ImageNet-trained model.
+    """
+
+    def __init__(self, backbone: nn.Module, source_indices: list[int]):
+        super().__init__()
+        if (len(source_indices) < 2 or len(set(source_indices)) != len(source_indices)
+                or any(type(i) is not int or not 0 <= i < 1000 for i in source_indices)):
+            raise ValueError("Projection requires distinct integer ImageNet indices in [0, 1000)")
+        self.backbone = backbone
+        self.register_buffer("source_indices", torch.tensor(source_indices, dtype=torch.long))
+
+    def forward(self, x):
+        logits = self.backbone(x)
+        if logits.ndim != 2 or logits.shape[1] != 1000:
+            raise ValueError("Projected classifier requires a 1000-logit ImageNet backbone")
+        return logits.index_select(1, self.source_indices)
+
+
 def cloud_model(name: str, pretrained: bool = True):
     from torchvision import models
     if name == "resnet50":

@@ -291,7 +291,8 @@ def _source_records(root: Path) -> list[dict]:
 def build_manifests(data_root: Path, output: Path, class_index: Path, severities=(5,),
                     seeds=DEFAULT_SEEDS, prefix_size=1024, washout_size=512,
                     suffix_size=1024, batch_size=32, expected_classes=1000,
-                    relative_paths=False, source_records=None) -> dict:
+                    relative_paths=False, source_records=None, allow_attached_source=False,
+                    dataset_profile="imagenet_c") -> dict:
     """Freeze three disjoint pilot panels; scenario/severity variants are paired.
 
     Basenames alone determine partition/rank/component selection. Synsets are
@@ -303,11 +304,37 @@ def build_manifests(data_root: Path, output: Path, class_index: Path, severities
         raise ValueError("Invalid panel sizes")
     if prefix_size % (2 * batch_size) or washout_size % batch_size or suffix_size % batch_size:
         raise ValueError("Panel sizes must form equal whole batches and two equal prefix blocks")
+    if dataset_profile not in {"imagenet_c", "tiny_imagenet_c"}:
+        raise ValueError("Unknown dataset profile")
+    tiny = dataset_profile == "tiny_imagenet_c"
     root = data_root.resolve(strict=True)
-    mapping, names = load_class_index(class_index, expected_classes)
+    projection = None
+    if tiny:
+        if expected_classes != 200:
+            raise ValueError("Tiny ImageNet-C requires 200 declared classes")
+        source_mapping, source_names = load_class_index(class_index, 1000)
+        first_variant = root / "brightness" / str(sorted(set(severities))[0])
+        if not first_variant.is_dir():
+            raise ValueError(f"Missing Tiny variant: {first_variant}")
+        synsets = sorted(p.name for p in first_variant.iterdir() if p.is_dir())
+        if len(synsets) != 200 or not set(synsets).issubset(source_mapping):
+            raise ValueError("Tiny dataset must have exactly 200 synsets present in the canonical ImageNet mapping")
+        mapping = {synset: i for i, synset in enumerate(synsets)}
+        projection = [source_mapping[synset] for synset in synsets]
+        names = [source_names[i] for i in projection]
+    else:
+        mapping, names = load_class_index(class_index, expected_classes)
+    image_name = re.compile(r"test_[0-9]+\.(?:JPEG|jpg|jpeg)\Z") if tiny else IMAGE_NAME
     provenance = _source_records(root) if source_records is None else source_records
-    if not provenance or not all(record.get("archives") for record in provenance):
-        raise ValueError("Source archive checksums are required")
+    def acceptable_source(record):
+        if record.get("archives"):
+            return True
+        attached = record.get("attached_dataset", {})
+        return (allow_attached_source and attached.get("source_url", "").startswith(("https://", "http://"))
+                and attached.get("verification") == "selected_image_hashes_only_not_official_archive_verified")
+
+    if not provenance or not all(acceptable_source(record) for record in provenance):
+        raise ValueError("Source archive checksums are required; attached datasets need explicit exploratory opt-in and source URL")
     variants = [(domain, severity) for domain in sorted({c for scenario in SCENARIOS for c in scenario})
                 for severity in sorted(set(severities))]
     inventories = {}
@@ -323,7 +350,7 @@ def build_manifests(data_root: Path, output: Path, class_index: Path, severities
         for synset in sorted(dirs):
             folder = _checked_destination(root, (domain, str(severity), synset))
             for path in sorted(folder.iterdir()):
-                if not path.is_file() or not IMAGE_NAME.fullmatch(path.name):
+                if not path.is_file() or not image_name.fullmatch(path.name):
                     raise ValueError(f"Unexpected image entry: {path}")
                 _checked_destination(root, (domain, str(severity), synset, path.name))
                 if path.name in inventory:
@@ -344,12 +371,14 @@ def build_manifests(data_root: Path, output: Path, class_index: Path, severities
     if len(pilot_ids) < required:
         raise ValueError(f"Need {required} disjoint pilot IDs; only {len(pilot_ids)} available. No fallback to reserve.")
     metadata = {
-        "dataset": "ImageNet-C", "source": DATASET_URL, "source_records": provenance,
+        "dataset": "Tiny ImageNet-C" if tiny else "ImageNet-C",
+        "source": "https://zenodo.org/records/2536630" if tiny else DATASET_URL,
+        "source_records": provenance,
         "source_records_sha256": object_sha256(provenance),
         "path_mode": "relative" if relative_paths else "absolute", "path_root": str(root),
         "class_to_idx": mapping, "model_class_names": names,
         "class_index_sha256": file_sha256(class_index),
-        "class_index_source": CLASS_INDEX_URL if expected_classes == 1000 else "test-fixture",
+        "class_index_source": CLASS_INDEX_URL if tiny or expected_classes == 1000 else "test-fixture",
         "partition_rule": "int(sha256('20260908/' + base_id),16) % 100 < 20",
         "rank_rule": "ascending sha256('20260908/' + base_id), then base_id",
         "split_role": "pilot_development", "available_pilot_ids": len(pilot_ids),
@@ -360,6 +389,12 @@ def build_manifests(data_root: Path, output: Path, class_index: Path, severities
         "panel_identity_disjoint": True, "scenario_and_severity_variants_share_panel_ids": True,
         "expected_classes": expected_classes,
     }
+    if tiny:
+        metadata.update(dataset_profile=dataset_profile, input_image_size=[64, 64],
+                        classifier="imagenet_200_class_projection", output_imagenet_indices=projection,
+                        classifier_sha256=object_sha256({"synsets": sorted(mapping), "indices": projection}),
+                        model_training="ImageNet-1K pretrained; no Tiny ImageNet source training",
+                        transform="IMAGENET1K_V1 transforms: resize 256, center crop 224, ImageNet normalization")
     payloads, index_entries = [], []
     image_hashes = {}
     for panel_index, seed in enumerate(seeds):
@@ -381,11 +416,16 @@ def build_manifests(data_root: Path, output: Path, class_index: Path, severities
                         for sample in batch:
                             path = root / sample.path if relative_paths else Path(sample.path)
                             if sample.path not in image_hashes:
+                                if tiny:
+                                    from PIL import Image
+                                    with Image.open(path) as image:
+                                        if image.size != (64, 64):
+                                            raise ValueError(f"Tiny ImageNet-C requires 64x64 selected JPEGs: {path}")
                                 image_hashes[sample.path] = file_sha256(path)
                             checksums[sample.path] = image_hashes[sample.path]
                 scenario = f"{a}+{b}__to__{q}"
                 # Statistical unit excludes repeated scenario/severity conditions.
-                panel_id = f"pilot_seed{seed}"
+                panel_id = f"{'tiny_' if tiny else ''}pilot_seed{seed}"
                 document["metadata"] = {**metadata, "panel_id": panel_id, "panel_index": panel_index,
                                         "seed": seed, "scenario": scenario, "severity": severity,
                                         "prefix_domains": [a, b], "suffix_domain": q,
